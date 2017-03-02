@@ -1,0 +1,37 @@
+vectors: 
+    colvec
+    rowvec
+
+    with functions:
+    
+    colvec<type> cvec(10); // a colvec with length of 10
+    colvec<type> cvec(cvec2);
+    rowvec<type> rvec(10);
+    rowvec<type> rvec(rvec2);
+
+    cvec(i)  // get the i-th element, 1 <= i <= length()
+    
+    cvec.length() 
+    cvec.set_length(int len)
+    cvec.append([type] element)
+    cvec.insert([type] element, int pos)
+    cvec.remove(int pos)
+
+    cvec + cvec2
+    -cvec
+    cvec - cvec2
+
+    a * cvec
+    cvec * rvec
+    rvec * cvec
+    cvec / a
+
+matrix:
+    matrix<type> mat(int m, int n) // a matrix with size m x n
+    matrix<type> mat(matrix<type2> mat2) // for example , we can convert a float matrix to a int matrix
+    mat(i,j) // get the i-row j-col element, 1<=i<=m, 1<=j<=n 
+
+    see other functions in file "matrix.h"
+
+
+DEMO in "main.cpp"
