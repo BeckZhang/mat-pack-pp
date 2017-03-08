@@ -1,3 +1,9 @@
+/* This file is part of the MAT-PACK-PP library
+ * license  sms, PKU
+ * author   Beck Zhang
+ * link     https://github.com/BeckZhang/mat-pack-pp
+ */
+
 #include "matrix.h"
 #include "exceptions.h"
 
@@ -220,6 +226,24 @@ matrix<TX> matrix<TX>::T() {
 }
 
 template<typename TX>
+void matrix<TX>::remove_col(int pos) {
+    if (pos == -1) {
+        pos = this->col_size();
+    }
+    for (int i=0; i<this->row_size(); ++i) {
+        this->eles[i].erase(this->eles[i].begin() + pos -1);
+    }
+}
+
+template<typename TX>
+void matrix<TX>::remove_row(int pos) {
+    if (pos == -1) {
+        pos = this->row_size();
+    }
+    this->eles.erase(this->eles.begin() + pos -1);
+}
+
+template<typename TX>
 matrix<TX> matrix<TX>::joint_right(matrix<TX> &mat) {
     if (this->row_size() != mat.row_size()) {
         throw InvalidDimensionsException("size of matrices mismatch");
@@ -234,6 +258,43 @@ matrix<TX> matrix<TX>::joint_right(matrix<TX> &mat) {
         }
     }
     return res;
+}
+
+template<typename TX>
+matrix<TX> matrix<TX>::submatrix(colvec<int> row_indices, rowvec<int> col_indices) {
+    //Check Data
+    for (int i=1; i<=row_indices.length(); ++i) {
+        if (row_indices(i) <= 0 || row_indices(i) > this->row_size()) {
+            throw InvalidCoordinatesException("indices out of range");
+        }
+    }
+    for (int j=1; j<=col_indices.length(); ++j) {
+        if (col_indices(j) <= 0 || col_indices(j) > this->col_size()) {
+            throw InvalidCoordinatesException("indices out of range");
+        }
+    }
+    //return data
+    matrix<TX> res(row_indices.length(), col_indices.length());
+    for (int i=1; i<=row_indices.length(); ++i) {
+        for (int j=1; j<=col_indices.length(); ++j) {
+            res(i,j) = this->element_access(row_indices(i), col_indices(j));
+        }
+    }
+    return res;
+}
+
+template<typename TX>
+matrix<TX> matrix<TX>::submatrix(int row_start, int row_end, int col_start, int col_end) {
+    if (row_end == -1) {
+        row_end = this->row_size();
+    }
+    if (col_end == -1) {
+        col_end = this->col_size();
+    }
+    if (row_start>row_end || col_start>col_end) {
+        throw InvalidCoordinatesException("start index shouldn't be larger than end index"); 
+    }
+    return this->submatrix(range(row_start, row_end), range(col_start, col_end).T());
 }
 
 template<typename TX>
@@ -299,6 +360,11 @@ matrix<TX> matrix<TX>::insert_col(colvec<TX> cvec, int pos) {
     if (this->row_size() != cvec.length()) {
         throw InvalidDimensionsException("size of matrix and colvec mismatch");
     }
+
+    if (pos == -1) {
+        pos = this->col_size() + 1;
+    }
+
     if (pos <= 0 || pos > this->col_size() + 1) {
         throw InvalidCoordinatesException("index out of range");
     }
@@ -315,6 +381,11 @@ matrix<TX> matrix<TX>::insert_row(rowvec<TX> rvec, int pos) {
     if (this->col_size() != rvec.length()) {
         throw InvalidDimensionsException("size of matrix and rowvec mismatch");
     }
+
+    if (pos == -1) {
+        pos = this->row_size() + 1;
+    }
+
     if (pos <= 0 || pos > this->row_size() + 1) {
         throw InvalidCoordinatesException("Index out or range");
     }

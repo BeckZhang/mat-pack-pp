@@ -1,3 +1,9 @@
+/* This file is part of the MAT-PACK-PP library
+ * license  sms, PKU
+ * author   Beck Zhang
+ * link     https://github.com/BeckZhang/mat-pack-pp
+ */
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -62,6 +68,9 @@ public:
     }
     
     void insert(TX new_ele, int pos) {
+        if (pos == -1) {
+            pos = this->length() + 1;
+        }
         if (pos <= 0 || pos > this->length() + 1) {
             throw InvalidCoordinatesException("index out of range");
         }
@@ -69,6 +78,9 @@ public:
     }
     
     void remove(int pos) {
+        if (pos == -1) {
+            pos = this->length();
+        }
         if (pos <= 0 || pos > this->length()) {
             throw InvalidCoordinatesException("index out of range");
         }

@@ -1,3 +1,9 @@
+/* This file is part of the MAT-PACK-PP library
+ * license  sms, PKU
+ * author   Beck Zhang
+ * link     https://github.com/BeckZhang/mat-pack-pp
+ */
+
 #ifndef MATRIX_H_
 #define MATRIX_H_
 
@@ -42,11 +48,16 @@ public:
     int col_size();
     void set_row_size(int m);
     void set_col_size(int n);
+    void remove_col(int pos);
+    void remove_row(int pos);
 
     matrix<TX> joint_bottom(matrix<TX> mat);
     matrix<TX> joint_bottom(rowvec<TX> rvec);
     matrix<TX> insert_col(colvec<TX> cvec, int pos);
     matrix<TX> insert_row(rowvec<TX> rvec, int pos);
+
+    matrix<TX> submatrix(colvec<int> row_indices, rowvec<int> col_indices);
+    matrix<TX> submatrix(int row_start, int row_end, int col_start, int col_end);
 
     typename vector<TX>::reference operator () (int a, int b);
     matrix<TX> operator +(matrix<TX> &mat);

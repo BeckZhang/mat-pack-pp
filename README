@@ -35,3 +35,7 @@ matrix:
 
 
 DEMO in "main.cpp"
+
+======= UPDATE on 2017.03.08 =======
+matrix.submatrix(vector<int> row_indices, vector<int> col_indices);
+matrix.submatrix(int row_start, int row_end, int col_start, int col_end);

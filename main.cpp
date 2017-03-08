@@ -47,6 +47,23 @@ int main() {
     mat = mat.joint_bottom(rvec / 2);
     print("mat = mat.joint_bottom(rvec)");
     print(mat);
+
+    //======  SUBMATRIX =========
+    print("mat.submatrix(1,end,2,end) = ");
+    /*
+    colvec<int> row_indices(2);
+    row_indices(1) = 2;
+    row_indices(2) = 1;
+    rowvec<int> col_indices(2);
+    col_indices(1) = 1;
+    col_indices(2) = 2;
+    print(mat.submatrix(row_indices, col_indices));
+    */
+    print(mat.submatrix(1,END,2,END));
+
+    //====== REMOVE ==========
+    mat.remove_row(1);
+    print(mat);
     
     //======== HELPERS =======
     print(range(1,10).T());
